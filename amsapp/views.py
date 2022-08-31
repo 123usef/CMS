@@ -40,3 +40,15 @@ def customer(request , id):
         "total_orders":total_orders,
     }
     return render(request , 'accounts/customers.html',context)
+
+
+def create_order(request):
+    if request.method == "POST":
+          pass  
+
+
+    context={
+
+    }    
+    return render(request,'accounts/order_form.html',context)    
+
