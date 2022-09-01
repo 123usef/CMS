@@ -1,8 +1,12 @@
+from dataclasses import field
 from multiprocessing import context
 from django.shortcuts import render ,redirect
 from django.http import HttpResponse
+from django.forms import inlineformset_factory
+
 from .models import *  
 from .form import *  
+from .filters import OrderFilter
 # Create your views here.
 
 def home(request):
@@ -35,23 +39,32 @@ def customer(request , id):
     orders = cus.order_set.all()
     total_orders = orders.count()
    
+    myfilter=OrderFilter(request.GET ,queryset=orders)
+    orders = myfilter.qs
+
     context={
         "customer":cus,
         "orders":orders,
         "total_orders":total_orders,
+        "myfilter":myfilter
     }
     return render(request , 'accounts/customers.html',context)
 
 
-def create_order(request):    
-    form = OrderForm()   
+def create_order(request,id):  
+    OrderFormSet = inlineformset_factory(Customer,Order,fields=('product','status'))  
+    customer = Customer.objects.get(id=id)
+    formset=OrderFormSet(queryset=Order.objects.none(),instance=customer)
+    # form = OrderForm(initial={'customer':customer})   
     if request.method== "POST":
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            form.save()
+        formset=OrderFormSet(request.POST ,instance=customer)
+        # form = OrderForm(request.POST)
+        if formset.is_valid():
+            formset.save()
             return redirect('/')
     context={
-        "form":form,
+        "formset":formset,
+        "customer":customer,
     }    
     return render(request,'accounts/order_form.html',context)    
 

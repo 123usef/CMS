@@ -11,7 +11,7 @@
                 <h5>customer</h5>
                 <hr>
                 <a class="btn btn-outline-info btn-sm btn-block" href="">Update Customer</a>
-                <a class="btn btn-outline-danger btn-sm btn-block" href="">Delete Customer</a>
+                <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'order' customer.id %}">place order</a>
 
             </div>
         </div>
@@ -39,6 +39,7 @@
         <div class="col">
             <div class="card card-body">
                 <form action="" method="get">
+                    {{myfilter.form}}
                     <button class="btn btn-primary" type="submit">Search</button>
                 </form>
             </div>
