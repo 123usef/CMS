@@ -1,0 +1,17 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{%block content%}
+<br>
+<div class="row">
+    <div class = "col-md-6">
+        <div class = "card card-body">   
+         <p>are you sure you want to delete "{{item.product.name}}"?</p>
+         <form method='POST'>{% csrf_token %}
+
+         <a class="btn btn-sm btn-info" href="{% url 'home'  %}"> Cancel</a>
+          <input class="btn btn-sm btn-dnager" type='submit' value="Delete"name="Delete"/>
+         </form>
+        </div>
+    </div>
+</div>
+{%endblock%}
