@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'amsapp',
+    'amsapp.apps.AmsappConfig',
     'django_filters'
 ]
 
